@@ -1,0 +1,2 @@
+# crymacs
+Crystal Emacs helper
