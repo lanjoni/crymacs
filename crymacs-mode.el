@@ -27,22 +27,39 @@
 
 ;;; Code:
 
-(defgroup crymacs-mode nil
-  "Crystal helper."
-  :group 'tools
-  :tag "Helper (crymacs-mode)")
-
 (defun crymacs-shard-exists? ()
   "Verify project type on your current directory."
   (file-exists-p (concat default-directory "shard.yml")))
 
+(defun crymacs-run-standalone-project ()
+  "Run standalone Crystal project."
+  (compile (concat "crystal run " buffer-file-name)))
+
+(defun crymacs-run-shard-project ()
+  "Run shard based Crystal project."
+  (message "Not implemented yet."))
+
 (defun crymacs-run ()
   "Run Crystal code."
+  (interactive)
   (if (crymacs-shard-exists?)
-      (message "Shard exists")
-      (message "Shard doesn't exists")))
+      (crymacs-run-shard-project)
+    (crymacs-run-standalone-project)))
 
-;; TODO: create simple `crystal run`.  Verifying is working.
+(defvar crymacs-mode-map (make-sparse-keymap)
+  "The keymap for crymacs-mode.")
+
+(define-key crymacs-mode-map (kbd "C-c C-.")
+  (lambda ()
+    (interactive)
+    (crymacs-run)))
+
+(define-minor-mode crymacs-mode
+  "Run, Compile and/or Debug your Crystal project."
+  :lighter " crymacs"
+  :keymap crymacs-mode-map)
+
+(add-hook 'crystal-mode-hook 'crymacs-mode)
 
 (provide 'crymacs-mode)
 ;;; crymacs-mode.el ends here
