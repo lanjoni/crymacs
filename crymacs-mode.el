@@ -32,7 +32,7 @@
     (if (executable-find "git")
         (concat (string-trim (shell-command-to-string "git rev-parse --show-toplevel")) "/")
         default-directory))
-
+ 
 (defun crymacs-shard-exists? ()
   "Verify project type on your current directory."
     (file-exists-p (concat (crymacs-get-root-directory) "shard.yml")))
@@ -53,7 +53,7 @@
     (crymacs-run-standalone-project)))
 
 (defvar crymacs-mode-map (make-sparse-keymap)
-  "The keymap for crymacs-mode.")
+  "The keymap for 'crymacs-mode'.")
 
 (define-key crymacs-mode-map (kbd "C-c C-.")
   (lambda ()
