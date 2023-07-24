@@ -27,9 +27,15 @@
 
 ;;; Code:
 
+(defun crymacs-get-root-directory ()
+  "Get the root directory of the current Git project."
+    (if (executable-find "git")
+        (concat (string-trim (shell-command-to-string "git rev-parse --show-toplevel")) "/")
+        default-directory))
+
 (defun crymacs-shard-exists? ()
   "Verify project type on your current directory."
-  (file-exists-p (concat default-directory "shard.yml")))
+    (file-exists-p (concat (crymacs-get-root-directory) "shard.yml")))
 
 (defun crymacs-run-standalone-project ()
   "Run standalone Crystal project."
@@ -37,7 +43,7 @@
 
 (defun crymacs-run-shard-project ()
   "Run shard based Crystal project."
-  (message "Not implemented yet."))
+  (compile (format "cd %s && shards run" (crymacs-get-root-directory))))
 
 (defun crymacs-run ()
   "Run Crystal code."
