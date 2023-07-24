@@ -61,7 +61,5 @@
 
 (add-hook 'crystal-mode-hook 'crymacs-mode)
 
-(add-to-list 'minor-mode-alist '())
-
 (provide 'crymacs-mode)
 ;;; crymacs-mode.el ends here
